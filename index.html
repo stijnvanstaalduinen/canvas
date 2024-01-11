@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="myCanvas"></canvas>
+    <script>//wanneer je scherm/browser is geladen, wordt je canvas getoond.
+        window.addEventListener("load", function () {
+            const canvas = document.querySelector("canvas");
+            //voeg context toe
+            const ctx = canvas.getContext("2d");
+            let painting = false
+          
+            //geef canvas de hoogte en breedte van je browser
+            canvas.height = window.innerHeight;
+            canvas.width = window.innerWidth;
+            
+
+            function startPosition (e){
+                painting = true
+            draw(e);}
+
+
+            function finishedPosition(){
+                painting = false;
+                ctx.beginpath();
+            }
+            function draw(e){
+                if ( ! painting) return;
+                ctx.linewidth = 10
+                ctx.linecap = "round";
+
+                ctx.lineTo(e.clientX,e.clientY);
+                ctx.stroke();
+                ctx.beginpath();
+                ctx.moveTo(e.clientX,e.clientY);
+            }
+            canvas.addEventListener("mousedown",startPosition);
+            canvas.addEventListener("mouseup",finishedPosition);
+            canvas.addEventListener("mousemove",draw);
+        
+            }) 
+           </script>  
+    
+</body>
+</html>
